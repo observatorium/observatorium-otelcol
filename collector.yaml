@@ -1,0 +1,48 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: localhost:55680
+
+processors:
+  # this processor will reject all unauthenticated calls
+  # it's not added to the pipeline, as a real OIDC server is required for this to work
+  authentication:
+    oidc:
+      issuer_url: http://localhost:1234
+      audience: http://auth.example.com
+      issuer_ca_path: /etc/pki/ca-trust/source/anchors/cacert.crt
+      username_claim: username
+      groups_claim: membership
+
+  # this processor will read an env var named OTEL_RESOURCE (key=value,key2=value2) and add each key-value pair as a resource attribute
+  resourcedetection:
+    detectors:
+      - env
+
+  # this routing table will always route spans to the 'jaeger' exporter
+  routing:
+    default_exporters:
+    - jaeger
+    from_attribute: X-Tenant
+    table:
+    - value: acme
+      exporters: 
+      - jaeger
+
+exporters:
+  jaeger:
+    endpoint: localhost:14250
+    insecure: true
+
+service:
+  pipelines:
+    traces:
+      receivers:
+        - otlp
+      processors:
+        # - authentication
+        - resourcedetection
+        - routing
+      exporters:
+        - jaeger

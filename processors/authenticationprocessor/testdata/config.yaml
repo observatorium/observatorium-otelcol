@@ -1,0 +1,21 @@
+receivers:
+  examplereceiver:
+
+processors:
+  authentication:
+    oidc:
+      issuer_url: http://localhost:1234
+      audience: http://auth.example.com
+      issuer_ca_path: /etc/pki/ca-trust/source/anchors/cacert.crt
+      username_claim: username
+      groups_claim: membership
+
+exporters:
+  exampleexporter:
+
+service:
+  pipelines:
+    traces:
+      receivers: [examplereceiver]
+      processors: [authentication]
+      exporters: [exampleexporter]

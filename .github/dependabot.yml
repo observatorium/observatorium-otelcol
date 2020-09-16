@@ -1,0 +1,6 @@
+version: 2
+updates:
+  - package-ecosystem: "gomod"
+    directory: "/processors/authenticationprocessor/v1"
+    schedule:
+      interval: "weekly"
