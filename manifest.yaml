@@ -4,6 +4,7 @@ dist:
     description: "Observatorium OpenTelemetry Collector Distribution"
     version: "0.1.0"
     output_path: ./_build
+    otelcol_version: "0.10.0"
 
 processors:
   - gomod: "github.com/observatorium/observatorium-otelcol/processors/authenticationprocessor v0.0.0"
