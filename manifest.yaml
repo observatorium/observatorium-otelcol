@@ -1,13 +1,13 @@
 dist:
     module: github.com/observatorium/observatorium-otelcol
     name: observatorium-otelcol
-    description: "Observatorium OpenTelemetry Collector Distribution"
-    version: "0.1.0"
+    description: Observatorium OpenTelemetry Collector Distribution
+    version: 0.1.0
     output_path: ./_build
-    otelcol_version: "0.10.0"
+    otelcol_version: 0.10.0
 
 processors:
-  - gomod: "github.com/observatorium/observatorium-otelcol/processors/authenticationprocessor v0.0.0"
-    path: "/home/jpkroehling/Projects/src/github.com/observatorium/observatorium-otelcol/processors/authenticationprocessor"
-  - gomod: "github.com/open-telemetry/opentelemetry-collector-contrib/processor/routingprocessor v0.10.0"
-  - gomod: "github.com/open-telemetry/opentelemetry-collector-contrib/processor/resourcedetectionprocessor v0.10.0"
+  - gomod: github.com/observatorium/observatorium-otelcol/processors/authenticationprocessor v0.0.0
+    path: ./processors/authenticationprocessor
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/routingprocessor v0.10.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/resourcedetectionprocessor v0.10.0
