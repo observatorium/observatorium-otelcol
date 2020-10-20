@@ -2,7 +2,7 @@ dist:
     module: github.com/observatorium/observatorium-otelcol
     name: observatorium-otelcol
     description: Observatorium OpenTelemetry Collector Distribution
-    version: 0.1.1
+    version: 0.2.0
     output_path: ./_build
     otelcol_version: 0.13.0
 
@@ -12,5 +12,8 @@ processors:
   - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/routingprocessor v0.13.0
 
 replaces:
+  # needed because the k8sprocessor references version v0 (local by the build)
   - github.com/open-telemetry/opentelemetry-collector-contrib/internal/k8sconfig => github.com/open-telemetry/opentelemetry-collector-contrib/internal/k8sconfig v0.13.0
+
+  # needed because the resourcedetectionprocessor references version v0 (local by the build)
   - github.com/open-telemetry/opentelemetry-collector-contrib/internal/common => github.com/open-telemetry/opentelemetry-collector-contrib/internal/common v0.13.0
