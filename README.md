@@ -5,13 +5,9 @@ This is the OpenTelemetry Collector distribution for Observatorium. It's compose
 Right now, the following modules are part of the distribution:
 
 * All modules (extensions, receivers, processors and exporters) from the core [OpenTelemetry Collector](https://github.com/open-telemetry/opentelemetry-collector/) distribution
-* [`authenticationprocessor`](./processors/authenticationprocessor) from this repository
-* [`routingprocessor`](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/master/processor/routingprocessor) from [OpenTelemetry Collector Contrib](https://github.com/open-telemetry/opentelemetry-collector-contrib)
-* [`resourcedetectionprocessor`](github.com/open-telemetry/opentelemetry-collector-contrib/processor/resourcedetectionprocessor) from OpenTelemetry Collector Contrib
-
-The following modules are enlisted to be added, but are currently failing to work as an external Go module:
-
 * [`k8sprocessor`](github.com/open-telemetry/opentelemetry-collector-contrib/processor/k8sprocessor) from OpenTelemetry Collector Contrib
+* [`resourcedetectionprocessor`](github.com/open-telemetry/opentelemetry-collector-contrib/processor/resourcedetectionprocessor) from OpenTelemetry Collector Contrib
+* [`routingprocessor`](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/master/processor/routingprocessor) from [OpenTelemetry Collector Contrib](https://github.com/open-telemetry/opentelemetry-collector-contrib)
 
 
 ## Building
