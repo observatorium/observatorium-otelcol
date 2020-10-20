@@ -3,18 +3,14 @@ receivers:
     protocols:
       grpc:
         endpoint: localhost:55680
+        auth:
+          oidc:
+            issuer_url: http://dex.dex.svc.cluster.local:5556/dex
+            audience: test
+            issuer_ca_path: /etc/pki/ca-trust/source/anchors/cacert.crt
+            username_claim: email
 
 processors:
-  # this processor will reject all unauthenticated calls
-  # it's not added to the pipeline, as a real OIDC server is required for this to work
-  authentication:
-    oidc:
-      issuer_url: http://localhost:1234
-      audience: http://auth.example.com
-      issuer_ca_path: /etc/pki/ca-trust/source/anchors/cacert.crt
-      username_claim: username
-      groups_claim: membership
-
   # this processor will read an env var named OTEL_RESOURCE (key=value,key2=value2) and add each key-value pair as a resource attribute
   resourcedetection:
     detectors:
@@ -26,8 +22,8 @@ processors:
     - jaeger
     from_attribute: X-Tenant
     table:
-    - value: acme
-      exporters: 
+    - value: test
+      exporters:
       - jaeger
 
 exporters:
