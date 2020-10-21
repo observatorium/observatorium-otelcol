@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go 1.14
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.14
+      id: go
+
+    - name: Setup opentelemetry-collector-builder
+      run: |
+        curl -sLo /bin/opentelemetry-collector-builder https://github.com/observatorium/opentelemetry-collector-builder/releases/download/v0.1.0/opentelemetry-collector-builder_0.1.0_linux_x86_64
+        chmod +x /bin/opentelemetry-collector-builder
+
+    ## this will also compile the distribution, but we'll compile it again with goreleaser
+    ## which do it for all the target arches and platforms
+    - name: Build the distribution
+      run: /bin/opentelemetry-collector-builder --config manifest.yaml
+
+    - name: Run GoReleaser
+      uses: goreleaser/goreleaser-action@v2
+      with:
+        version: latest
+        args: release --rm-dist
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

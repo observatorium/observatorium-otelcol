@@ -1,0 +1,39 @@
+before:
+  hooks:
+    - cd _build && go mod download
+builds:
+  - id: opentelemetry-collector
+    dir: _build
+    flags:
+      - -trimpath
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm
+      - arm64
+      - s390x
+    goarm:
+      - 6
+      - 7
+dockers:
+  - image_templates:
+    - "quay.io/observatorium/opentelemetry-collector:{{ .Tag }}"
+    - "quay.io/observatorium/opentelemetry-collector:v{{ .Major }}"
+    - "quay.io/observatorium/opentelemetry-collector:v{{ .Major }}.{{ .Minor }}"
+    - "quay.io/observatorium/opentelemetry-collector:latest"
+archives:
+  - format: binary
+    replacements:
+      386: i386
+      amd64: x86_64
+checksum:
+  name_template: "checksums.txt"
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
