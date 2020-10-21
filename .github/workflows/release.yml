@@ -19,13 +19,11 @@ jobs:
 
     - name: Setup opentelemetry-collector-builder
       run: |
-        curl -sLo /bin/opentelemetry-collector-builder https://github.com/observatorium/opentelemetry-collector-builder/releases/download/v0.1.0/opentelemetry-collector-builder_0.1.0_linux_x86_64
-        chmod +x /bin/opentelemetry-collector-builder
+        curl -sLo /usr/local/bin/opentelemetry-collector-builder https://github.com/observatorium/opentelemetry-collector-builder/releases/download/v0.1.0/opentelemetry-collector-builder_0.1.0_linux_x86_64
+        chmod +x /usr/local/bin/opentelemetry-collector-builder
 
-    ## this will also compile the distribution, but we'll compile it again with goreleaser
-    ## which do it for all the target arches and platforms
     - name: Build the distribution
-      run: /bin/opentelemetry-collector-builder --config manifest.yaml
+      run: /usr/local/bin/opentelemetry-collector-builder --config manifest.yaml
 
     - name: Run GoReleaser
       uses: goreleaser/goreleaser-action@v2
