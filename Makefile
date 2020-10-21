@@ -6,7 +6,7 @@ build: otelcol-builder
 	@$(OTELCOL_BUILDER) --config manifest.yaml
 
 otelcol-builder:
-ifeq (, $(shell which opentelemetry-collector-builder > /dev/null 2>&1))
+ifeq (, $(shell which opentelemetry-collector-builder))
 	@{ \
 	set -e ;\
 	mkdir -p $(OTELCOL_BUILDER_DIR) ;\
