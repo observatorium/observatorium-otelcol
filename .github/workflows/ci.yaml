@@ -20,8 +20,9 @@ jobs:
 
     - name: Setup opentelemetry-collector-builder
       run: |
-        curl -sLo /bin/opentelemetry-collector-builder https://github.com/observatorium/opentelemetry-collector-builder/releases/download/v0.1.0/opentelemetry-collector-builder_0.1.0_linux_x86_64
-        chmod +x /bin/opentelemetry-collector-builder
+        mkdir -p ~/bin
+        curl -sLo ~/bin/opentelemetry-collector-builder https://github.com/observatorium/opentelemetry-collector-builder/releases/download/v0.1.1/opentelemetry-collector-builder_0.1.1_linux_x86_64
+        chmod +x ~/bin/opentelemetry-collector-builder
 
     - name: Build the distribution
-      run: /bin/opentelemetry-collector-builder --config manifest.yaml
+      run: ~/bin/opentelemetry-collector-builder --config manifest.yaml
