@@ -8,9 +8,10 @@ receivers:
         endpoint: localhost:55680
         auth:
           oidc:
-            issuer_url: http://dex.dex.svc.cluster.local:5556/dex
+            # should match the "issuer" field in dex.yaml
+            issuer_url: https://127.0.0.1:5556/dex
             audience: test
-            issuer_ca_path: /etc/pki/ca-trust/source/anchors/cacert.crt
+            issuer_ca_path: ./test/certs/ca.pem
             username_claim: email
 
 processors:

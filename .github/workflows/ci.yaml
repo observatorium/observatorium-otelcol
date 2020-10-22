@@ -20,3 +20,6 @@ jobs:
 
     - name: Build the distribution
       run: make build
+
+    - name: Smoke test
+      run: ./test/test.sh
