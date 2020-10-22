@@ -1,6 +1,3 @@
-before:
-  hooks:
-    - cd _build && go mod download
 builds:
   - id: opentelemetry-collector
     dir: _build

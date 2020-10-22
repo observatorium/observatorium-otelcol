@@ -23,6 +23,9 @@ jobs:
     - name: Smoke test
       run: ./test/test.sh
 
+    - name: Log into Quay.io
+      run: echo "${{ secrets.QUAY_PASSWORD }}" | docker login quay.io -u ${{ secrets.QUAY_USERNAME }} --password-stdin
+
     - name: Run GoReleaser
       uses: goreleaser/goreleaser-action@v2
       with:
