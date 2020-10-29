@@ -2,10 +2,17 @@ extensions:
   health_check:
 
 receivers:
-  otlp/agent:
+
+  otlp/agent-auth:
     protocols:
       grpc:
         endpoint: localhost:55680
+
+  otlp/agent-noauth:
+    protocols:
+      grpc:
+        endpoint: localhost:55685
+
   otlp/collector:
     protocols:
       grpc:
@@ -38,25 +45,49 @@ processors:
       - jaeger
 
 exporters:
-  otlp/collector:
+
+  otlp/collector-auth:
     endpoint: localhost:55690
     ca_file: ./test/certs/ca.pem
     per_rpc_auth:
       type: bearer
       bearer_token: the-token # this will be replaced by the test script
+
+  otlp/collector-noauth:
+    endpoint: localhost:55690
+    ca_file: ./test/certs/ca.pem
+
   jaeger:
     endpoint: localhost:14250
     insecure: true
 
+  logging:
+    loglevel: debug
 service:
   extensions: [health_check]
   pipelines:
-    traces/agent:
+
+    # a pipeline where we try to export to the collector without sending auth data
+    # should never succeed in exporting traces
+    traces/agent-auth:
       receivers:
-        - otlp/agent
+        - otlp/agent-auth
       processors: []
       exporters:
-        - otlp/collector
+        - logging
+        - otlp/collector-auth
+
+    # a pipeline where we try to export to the collector with auth data
+    # should succeed in exporting traces
+    traces/agent-noauth:
+      receivers:
+        - otlp/agent-noauth
+      processors: []
+      exporters:
+        - logging
+        - otlp/collector-noauth
+
+    # the pipeline that we expect Observatorium OpenTelemetry Collector to use
     traces/collector:
       receivers:
         - otlp/collector
@@ -64,4 +95,5 @@ service:
         - resourcedetection
         - routing
       exporters:
+        - logging
         - jaeger
