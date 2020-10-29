@@ -8,7 +8,10 @@ podman run \
     --name jaeger \
     -p 14250 \
     -p 14269 \
-    jaegertracing/all-in-one:1.20.0 > /dev/null
+    -p 16686 \
+    jaegertracing/all-in-one:1.20.0 \
+    --log-level=debug \
+    > /dev/null
 
 retries=0
 while true

@@ -1,3 +1,5 @@
 _build
 dist
 test/*.log
+otelcol.pid
+test/collector.yaml
