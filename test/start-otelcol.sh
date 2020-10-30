@@ -59,5 +59,3 @@ do
     fi
     sleep 0.1s
 done
-
-echo "Startup log"
