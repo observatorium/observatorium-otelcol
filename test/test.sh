@@ -2,12 +2,30 @@
 
 # register the teardown function before we can use it in the trap
 function teardown {
+    podman logs dex > ./test/dex.log
+    podman logs jaeger > ./test/jaeger.log
+
     ## tear down
     echo "Tearing down..."
     for st in ./test/stop-otelcol.sh ./test/stop-jaeger.sh ./test/stop-dex.sh
     do
         ./${st}
     done
+
+    echo "🪵 dex logs"
+    cat ./test/dex.log
+
+    echo "🪵 Jaeger logs"
+    cat ./test/jaeger.log
+
+    echo "🪵 tracegen logs"
+    cat ./test/tracegen.log
+
+    echo "🪵 Observatorium OpenTelemetry Collector distribution logs"
+    cat ./test/otelcol.log
+
+    echo "🪵 Test logs"
+    cat ./test/test.log
 }
 
 ## setup

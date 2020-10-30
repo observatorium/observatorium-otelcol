@@ -33,7 +33,6 @@ do
     kill -0 "${pid}" >/dev/null 2>&1
     if [ $? != 0 ]; then
         echo "❌ FAIL. The Observatorium OpenTelemetry Collector isn't running. Startup log:"
-        cat ./test/otelcol.log
         failed=true
         exit 1
     fi
@@ -62,4 +61,3 @@ do
 done
 
 echo "Startup log"
-cat ./test/otelcol.log

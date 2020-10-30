@@ -27,7 +27,7 @@ do
         echo "❌ FAIL. Could not find the traces/spans within a reasonable time."
         exit 1
     fi
-    sleep 0.1s
+    sleep 0.2s
 done
 
 traces=$(curl -s "http://localhost:16686/api/traces?service=e2e-test-agent-without-auth")
