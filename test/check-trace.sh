@@ -16,7 +16,7 @@ do
             echo "✅ Traces found in the backend."
             break
         else
-            echo "not enough spans in the trace" >> ./test/test.log
+            echo "not enough spans in the trace: found ${numSpans}, expected at least 2" >> ./test/test.log
         fi
     else
         echo "no traces found for the e2e-test service" >> ./test/test.log
