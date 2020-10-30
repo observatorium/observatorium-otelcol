@@ -2,10 +2,17 @@ extensions:
   health_check:
 
 receivers:
-  otlp:
+  otlp/agent:
     protocols:
       grpc:
         endpoint: localhost:55680
+  otlp/collector:
+    protocols:
+      grpc:
+        endpoint: localhost:55690
+        tls_settings:
+          key_file: ./test/certs/cert-key.pem
+          cert_file: ./test/certs/cert.pem
         auth:
           oidc:
             # should match the "issuer" field in dex.yaml
@@ -31,6 +38,12 @@ processors:
       - jaeger
 
 exporters:
+  otlp/collector:
+    endpoint: localhost:55690
+    ca_file: ./test/certs/ca.pem
+    per_rpc_auth:
+      type: bearer
+      bearer_token: the-token # this will be replaced by the test script
   jaeger:
     endpoint: localhost:14250
     insecure: true
@@ -38,9 +51,15 @@ exporters:
 service:
   extensions: [health_check]
   pipelines:
-    traces:
+    traces/agent:
       receivers:
-        - otlp
+        - otlp/agent
+      processors: []
+      exporters:
+        - otlp/collector
+    traces/collector:
+      receivers:
+        - otlp/collector
       processors:
         - resourcedetection
         - routing
