@@ -3,6 +3,8 @@ builds:
     dir: _build
     flags:
       - -trimpath
+    ldflags:
+      - -s -w
     env:
       - CGO_ENABLED=0
     goos:
@@ -17,6 +19,9 @@ builds:
     goarm:
       - 6
       - 7
+    hooks:
+      post:
+        - upx "{{ .Path }}"
 dockers:
   - image_templates:
     - "quay.io/observatorium/opentelemetry-collector:{{ .Tag }}"
