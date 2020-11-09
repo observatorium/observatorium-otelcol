@@ -84,7 +84,7 @@ spec:
     spec:
       containers:
       - name: otelcol
-        image: quay.io/jpkroehling/observatorium-otelcol:0.13.0
+        image: quay.io/observatorium/opentelemetry-collector:0.3.0
         args: ["--config=/etc/otelcol/config.yaml"]
         resources:
           requests:
