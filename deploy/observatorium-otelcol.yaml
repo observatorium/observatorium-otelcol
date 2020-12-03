@@ -16,15 +16,13 @@ data:
 
     receivers:
       otlp:
-        protocols:
-          grpc:
-            endpoint: localhost:55680
-            auth:
-              oidc:
-                issuer_url: https://dex.dex.svc.cluster.local:5556/dex
-                audience: test
-                issuer_ca_path: /etc/pki/ca-trust/source/anchors/service-ca.crt
-                username_claim: email
+        endpoint: localhost:4317
+        auth:
+          oidc:
+            issuer_url: https://dex.dex.svc.cluster.local:5556/dex
+            audience: test
+            issuer_ca_path: /etc/pki/ca-trust/source/anchors/service-ca.crt
+            username_claim: email
 
     processors:
       # this processor will read an env var named OTEL_RESOURCE (key=value,key2=value2) and add each key-value pair as a resource attribute
@@ -68,8 +66,8 @@ metadata:
     app: observatorium-otelcol
 spec:
   ports:
-  - port: 55680
-    targetPort: 55680
+  - port: 4317
+    targetPort: 4317
   selector:
     app: observatorium-otelcol
 ---
@@ -96,7 +94,7 @@ spec:
             cpu: 200m
             memory: 512Mi
         ports:
-        - containerPort: 55680
+        - containerPort: 4317
         volumeMounts:
         - name: otelcol-config
           mountPath: /etc/otelcol
