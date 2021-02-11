@@ -6,7 +6,7 @@ podman run \
     --detach \
     --rm \
     --name dex \
-    -p 5556 \
+    -p 5556:5556 \
     -v ./test/dex.yaml:/etc/config/dex.yaml:z \
     -v ./test/certs/cert.pem:/etc/config/cert.pem:z \
     -v ./test/certs/cert-key.pem:/etc/config/cert-key.pem:z \
@@ -29,7 +29,7 @@ do
             echo "Failed to stop the running container."
             exit 1
         fi
-        break
+        exit 2
     fi
 done
 
