@@ -6,9 +6,9 @@ podman run \
     --rm \
     --detach \
     --name jaeger \
-    -p 14250 \
-    -p 14269 \
-    -p 16686 \
+    -p 14250:14250 \
+    -p 14269:14269 \
+    -p 16686:16686 \
     jaegertracing/all-in-one:1.20.0 \
     --log-level=debug \
     > /dev/null
