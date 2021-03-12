@@ -1,5 +1,5 @@
 GO=$(shell which go)
-OTELCOL_BUILDER_VERSION ?= 0.7.0
+OTELCOL_BUILDER_VERSION ?= 0.22.0
 OTELCOL_BUILDER_DIR ?= ~/bin
 OTELCOL_BUILDER ?= $(OTELCOL_BUILDER_DIR)/opentelemetry-collector-builder
 
