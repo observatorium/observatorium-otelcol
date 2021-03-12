@@ -36,8 +36,9 @@ echo "🔧 Setting up..."
 for st in ./test/start-jaeger.sh ./test/start-dex.sh ./test/install-tracegen.sh
 do
     ./${st}
-    if [ $? != 0 ]; then
-        exit $?
+    rc=$?
+    if [ $rc != 0 ]; then
+        exit $rc
     fi
 done
 
@@ -47,15 +48,17 @@ trap teardown EXIT
 ## test
 echo "🔧 Starting Observatorium OpenTelemetry Collector distribution..."
 ./test/start-otelcol.sh
-if [ $? != 0 ]; then
-    exit $?
+rc=$?
+if [ $rc != 0 ]; then
+    exit $rc
 fi
 
 ## generate a trace
 echo "🔧 Generating trace..."
 ./test/generate-trace.sh
-if [ $? != 0 ]; then
-    exit $?
+rc=$?
+if [ $rc != 0 ]; then
+    exit $rc
 fi
 
 ## check that a trace exists in Jaeger
