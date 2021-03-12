@@ -1,9 +1,10 @@
+GO=$(shell which go)
 OTELCOL_BUILDER_VERSION ?= 0.7.0
 OTELCOL_BUILDER_DIR ?= ~/bin
 OTELCOL_BUILDER ?= $(OTELCOL_BUILDER_DIR)/opentelemetry-collector-builder
 
 build: otelcol-builder
-	@$(OTELCOL_BUILDER) --config manifest.yaml
+	@$(OTELCOL_BUILDER) --config manifest.yaml --go ${GO}
 
 otelcol-builder:
 ifeq (, $(shell which opentelemetry-collector-builder))
