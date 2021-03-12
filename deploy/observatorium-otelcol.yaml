@@ -89,12 +89,15 @@ spec:
     spec:
       containers:
       - name: otelcol
-        image: quay.io/observatorium/opentelemetry-collector:v0.3.0
+        image: quay.io/observatorium/opentelemetry-collector:v0.22.0
         args: ["--config=/etc/otelcol/config.yaml"]
         resources:
+          limits:
+            cpu: 1500m
+            memory: 1Gi
           requests:
             cpu: 200m
-            memory: 512Mi
+            memory: 256Mi
         ports:
         - containerPort: 4317
         volumeMounts:
